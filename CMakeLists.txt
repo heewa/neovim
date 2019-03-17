@@ -98,6 +98,12 @@ else()
   option(ENABLE_LTO "enable link time optimization" ON)
 endif()
 
+if(WIN32)
+  option(ENABLE_LIBACL "enable libacl" OFF)
+else()
+  option(ENABLE_LIBACL "enabled libacl" ON)
+endif()
+
 message(STATUS "CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}")
 
 # Build type.
@@ -464,6 +470,11 @@ endif()
 if(ENABLE_LIBICONV)
   find_package(Iconv REQUIRED)
   include_directories(SYSTEM ${Iconv_INCLUDE_DIRS})
+endif()
+
+if(ENABLE_LIBACL)
+  find_package(LibACL REQUIRED)
+  include_directories(SYSTEM ${LibACL_INCLUDE_DIRS})
 endif()
 
 # Determine platform's threading library. Set CMAKE_THREAD_PREFER_PTHREAD
